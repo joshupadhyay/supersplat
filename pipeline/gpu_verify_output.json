@@ -1,0 +1,8 @@
+{
+  "cuda_available": true,
+  "device_count": 1,
+  "device_name": "NVIDIA A10",
+  "vram_gb": 23.7,
+  "cuda_version": "12.1",
+  "gpu_compute_works": true
+}
