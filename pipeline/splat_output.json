@@ -1,0 +1,7 @@
+{
+  "output_path": "/data/splats/williamsburg-test-1/scene.ply",
+  "num_images": 12,
+  "num_gaussians": 205659,
+  "file_size_mb": 13.3,
+  "inference_time_s": 3.3
+}

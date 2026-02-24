@@ -1,0 +1,7 @@
+{
+  "output_path": "/data/splats/williamsburg-multi-3pano/scene.ply",
+  "num_images": 12,
+  "num_gaussians": 961730,
+  "file_size_mb": 62.4,
+  "inference_time_s": 2.7
+}

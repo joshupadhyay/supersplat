@@ -1,0 +1,36 @@
+{
+  "source_image_id": "1543541656417664",
+  "source_url": "https://www.mapillary.com/app/?pKey=1543541656417664",
+  "compass_angle": 176.6758927445,
+  "camera_type": "spherical",
+  "pano_size": [
+    5760,
+    2880
+  ],
+  "num_crops": 4,
+  "fov_deg": 90.0,
+  "pitch_deg": 0.0,
+  "out_size": 512,
+  "crops": [
+    {
+      "index": 0,
+      "heading": 176.6758927445,
+      "filename": "crop_00_h176.7.jpg"
+    },
+    {
+      "index": 1,
+      "heading": 266.6758927445,
+      "filename": "crop_01_h266.7.jpg"
+    },
+    {
+      "index": 2,
+      "heading": 356.6758927445,
+      "filename": "crop_02_h356.7.jpg"
+    },
+    {
+      "index": 3,
+      "heading": 86.6758927445,
+      "filename": "crop_03_h086.7.jpg"
+    }
+  ]
+}
