@@ -12,6 +12,9 @@
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-select": "^2.2.5",
     "@radix-ui/react-slot": "^1.2.3",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "@sparkjsdev/spark": "^0.1.10",
     "bun-plugin-tailwind": "^0.0.15",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -20,11 +23,13 @@
     "react-dom": "^19",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.11",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "three": "^0.183.1"
   },
   "devDependencies": {
+    "@types/bun": "latest",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/bun": "latest"
+    "@types/three": "^0.183.1"
   }
 }
