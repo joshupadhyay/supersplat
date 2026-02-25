@@ -17,7 +17,8 @@ export function ControlsPanel({ loading, onReset }: ControlsPanelProps) {
             </p>
           )}
           <div className="text-xs text-muted-foreground space-y-1">
-            <p>Drag to orbit &middot; Scroll to zoom</p>
+            <p>Drag to pan &middot; Scroll to zoom</p>
+            <p>Shift + Drag to rotate</p>
             <p>WASD / Arrow keys to move</p>
           </div>
           <Button variant="outline" size="sm" onClick={onReset}>

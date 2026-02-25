@@ -29,6 +29,10 @@ interface SplatViewerProps {
   controlsRef?: React.RefObject<CameraControlsImpl | null>;
 }
 
+// camera-controls ACTION enum values
+const ACTION_ROTATE = 1;
+const ACTION_TRUCK = 2;
+
 function KeyboardMovement({
   controlsRef,
 }: {
@@ -46,6 +50,31 @@ function KeyboardMovement({
       window.removeEventListener("keyup", onKeyUp);
     };
   }, []);
+
+  // Shift+drag = rotate, default drag = pan (truck)
+  useEffect(() => {
+    const controls = controlsRef.current;
+    if (!controls) return;
+
+    controls.mouseButtons.left = ACTION_TRUCK;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Shift" && controlsRef.current) {
+        controlsRef.current.mouseButtons.left = ACTION_ROTATE;
+      }
+    };
+    const onKeyUp = (e: KeyboardEvent) => {
+      if (e.key === "Shift" && controlsRef.current) {
+        controlsRef.current.mouseButtons.left = ACTION_TRUCK;
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
+    };
+  }, [controlsRef]);
 
   useFrame((_, delta) => {
     if (!controlsRef.current) return;
