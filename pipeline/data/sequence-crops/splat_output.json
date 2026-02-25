@@ -1,7 +1,0 @@
-{
-  "output_path": "/data/splats/williamsburg-sequence/scene.ply",
-  "num_images": 12,
-  "num_gaussians": 1776643,
-  "file_size_mb": 115.2,
-  "inference_time_s": 2.2
-}
