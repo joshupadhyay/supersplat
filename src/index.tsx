@@ -3,6 +3,15 @@ import index from "./index.html";
 
 const server = serve({
   routes: {
+    // Serve .ply splat files from pipeline/
+    "/splats/:filename": async (req) => {
+      const file = Bun.file(`./pipeline/${req.params.filename}`);
+      if (!(await file.exists())) return new Response("Not found", { status: 404 });
+      return new Response(file, {
+        headers: { "Content-Type": "application/octet-stream" },
+      });
+    },
+
     // Serve index.html for all unmatched routes.
     "/*": index,
 
