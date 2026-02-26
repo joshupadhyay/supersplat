@@ -179,10 +179,16 @@ function Scene({
     [secondUrl, onLoadingChange],
   );
 
+  // Reset loading flags independently so a URL that didn't change
+  // doesn't need to re-fire onLoad (R3F won't reconstruct unchanged args)
   useEffect(() => {
-    loadedRef.current = { first: false, second: false };
+    loadedRef.current.first = false;
     onLoadingChange?.(true);
-  }, [url, secondUrl, onLoadingChange]);
+  }, [url, onLoadingChange]);
+
+  useEffect(() => {
+    loadedRef.current.second = false;
+  }, [secondUrl]);
 
   // Start camera at origin looking forward (-Z), save as reset state
   useEffect(() => {

@@ -39,3 +39,4 @@ __pycache__/
 
 # Pipeline intermediate data (crops, test images, metadata)
 pipeline/data/
+.vercel

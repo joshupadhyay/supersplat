@@ -5,9 +5,10 @@
   },
   "worlds": [
     {
-      "id": "pano00",
+      "id": "marble-dual",
       "file": "pano00.spz",
-      "file_size_mb": 26.2,
+      "secondFile": "pano02.spz",
+      "file_size_mb": 52,
       "source_pano_id": "e4RgCEynTaFEqRllkPoYSw",
       "center": {
         "lat": 40.728118959310166,
@@ -19,23 +20,6 @@
       "marble_url": "https://marble.worldlabs.ai/world/43d081c5-481f-42fc-8a15-2ab4d999d2ee",
       "estimated_radius_m": null,
       "generated_at": "2026-02-26T16:36:57Z",
-      "status": "completed"
-    },
-    {
-      "id": "pano02",
-      "file": "pano02.spz",
-      "file_size_mb": 25.8,
-      "source_pano_id": "01_HlN9Fi2xgzAL6MRkihg",
-      "center": {
-        "lat": 40.72820748144431,
-        "lng": -73.98673042877671
-      },
-      "heading": 119.438126,
-      "model": "Marble 0.1-mini",
-      "world_id": "unknown",
-      "marble_url": "https://marble.worldlabs.ai/world/613062f4-a2ac-403b-a6b0-eed1f080f174",
-      "estimated_radius_m": null,
-      "generated_at": "2026-02-26T16:44:34Z",
       "status": "completed"
     },
     {

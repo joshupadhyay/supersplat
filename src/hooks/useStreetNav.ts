@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 interface World {
   id: string;
   file: string;
+  secondFile?: string;
   center: { lat: number; lng: number };
 }
 
@@ -10,6 +11,7 @@ export interface StreetNav {
   worlds: World[];
   currentIndex: number;
   currentUrl: string;
+  secondUrl?: string;
   next: () => void;
   prev: () => void;
   hasNext: boolean;
@@ -42,11 +44,15 @@ export function useStreetNav(): StreetNav {
 
   const currentWorld = worlds[currentIndex];
   const currentUrl = currentWorld ? `/splats/${currentWorld.file}` : "";
+  const secondUrl = currentWorld?.secondFile
+    ? `/splats/${currentWorld.secondFile}`
+    : undefined;
 
   return {
     worlds,
     currentIndex,
     currentUrl,
+    secondUrl,
     next,
     prev,
     hasNext: currentIndex < worlds.length - 1,

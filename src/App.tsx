@@ -18,7 +18,7 @@ export function App() {
   const transitioningRef = useRef(false);
 
   // Debug panel state (always visible)
-  const [debugOffset, setDebugOffset] = useState({ x: 0, y: 0, z: -20 });
+  const [debugOffset, setDebugOffset] = useState({ x: 0, y: 0, z: 4 });
   const [debugRotationY, setDebugRotationY] = useState(0);
   const [debugShowSecond, setDebugShowSecond] = useState(true);
 
@@ -84,23 +84,25 @@ export function App() {
       {activeUrl && (
         <SplatViewer
           url={activeUrl}
-          secondUrl="/splats/pano02.spz"
+          secondUrl={nav.secondUrl}
           offset={debugOffset}
           rotationY={debugRotationY}
-          showSecond={debugShowSecond}
+          showSecond={!!nav.secondUrl && debugShowSecond}
           onLoadingChange={handleLoadingChange}
           controlsRef={controlsRef}
         />
       )}
       <TransitionOverlay active={overlayActive} />
-      <DebugPanel
-        offset={debugOffset}
-        rotationY={debugRotationY}
-        showSecond={debugShowSecond}
-        onOffsetChange={setDebugOffset}
-        onRotationYChange={setDebugRotationY}
-        onShowSecondChange={setDebugShowSecond}
-      />
+      {nav.secondUrl && (
+        <DebugPanel
+          offset={debugOffset}
+          rotationY={debugRotationY}
+          showSecond={debugShowSecond}
+          onOffsetChange={setDebugOffset}
+          onRotationYChange={setDebugRotationY}
+          onShowSecondChange={setDebugShowSecond}
+        />
+      )}
       <ControlsPanel
         loading={loading}
         onReset={handleReset}
