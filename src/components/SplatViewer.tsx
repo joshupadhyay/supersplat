@@ -113,7 +113,7 @@ function KeyboardMovement({
 
   useFrame((_, delta) => {
     if (!controlsRef.current) return;
-    const speed = 5 * delta;
+    const speed = 2 * delta;
     const keys = keysPressed.current;
     if (keys.has("KeyW") || keys.has("ArrowUp"))
       controlsRef.current.forward(speed, false);
@@ -194,7 +194,7 @@ function Scene({
   useEffect(() => {
     const controls = activeControlsRef.current;
     if (!controls) return;
-    controls.setLookAt(0, 0, 0, 0, 0, -5, false);
+    controls.setLookAt(0, 0, 0, 0, 0, 5, false);
     controls.saveState();
   }, [activeControlsRef]);
 

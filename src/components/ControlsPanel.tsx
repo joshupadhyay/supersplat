@@ -14,9 +14,10 @@ interface ControlsPanelProps {
   loading: boolean;
   onReset: () => void;
   nav?: NavControls;
+  note?: string;
 }
 
-export function ControlsPanel({ loading, onReset, nav }: ControlsPanelProps) {
+export function ControlsPanel({ loading, onReset, nav, note }: ControlsPanelProps) {
   return (
     <div className="absolute bottom-4 left-4 pointer-events-none z-10">
       <Card className="pointer-events-auto bg-card/80 backdrop-blur-sm border-muted w-72">
@@ -31,6 +32,9 @@ export function ControlsPanel({ loading, onReset, nav }: ControlsPanelProps) {
             <p>Shift + Drag to look around</p>
             <p>WASD / Arrow keys to move</p>
           </div>
+          {note && (
+            <p className="text-xs text-amber-400/90 italic">{note}</p>
+          )}
           <Button variant="outline" size="sm" onClick={onReset}>
             Reset Camera
           </Button>

@@ -29,6 +29,7 @@
       "source_pano_id": null,
       "center": null,
       "heading": 0,
+      "note": "Recommend Shift+Drag to look around. The world quickly disintegrates if you move.",
       "model": "AnySplat",
       "world_id": "unknown",
       "marble_url": null,

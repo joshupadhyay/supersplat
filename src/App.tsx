@@ -106,6 +106,7 @@ export function App() {
       <ControlsPanel
         loading={loading}
         onReset={handleReset}
+        note={nav.note}
         nav={
           hasSplatParam
             ? undefined

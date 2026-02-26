@@ -5,6 +5,7 @@ interface World {
   file: string;
   secondFile?: string;
   center: { lat: number; lng: number };
+  note?: string;
 }
 
 export interface StreetNav {
@@ -12,6 +13,7 @@ export interface StreetNav {
   currentIndex: number;
   currentUrl: string;
   secondUrl?: string;
+  note?: string;
   next: () => void;
   prev: () => void;
   hasNext: boolean;
@@ -53,6 +55,7 @@ export function useStreetNav(): StreetNav {
     currentIndex,
     currentUrl,
     secondUrl,
+    note: currentWorld?.note,
     next,
     prev,
     hasNext: currentIndex < worlds.length - 1,
