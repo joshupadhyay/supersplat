@@ -1,6 +1,7 @@
 import { useRef, useMemo, useEffect } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
+import { Vector3 } from "three";
 import type CameraControlsImpl from "camera-controls";
 import type {
   SparkRenderer as SparkRendererClass,
@@ -51,21 +52,51 @@ function KeyboardMovement({
     };
   }, []);
 
-  // Shift+drag = rotate, default drag = pan (truck)
+  // Shift+drag = first-person look-around, default drag = pan (truck)
+  const savedDistanceRef = useRef(5);
+
   useEffect(() => {
     const controls = controlsRef.current;
     if (!controls) return;
 
     controls.mouseButtons.left = ACTION_TRUCK;
 
+    const camPos = new Vector3();
+    const target = new Vector3();
+    const lookDir = new Vector3();
+
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Shift" && controlsRef.current) {
-        controlsRef.current.mouseButtons.left = ACTION_ROTATE;
+        const c = controlsRef.current;
+        // Save orbit distance, then collapse target to near-camera for first-person rotation
+        savedDistanceRef.current = c.distance;
+        c.getPosition(camPos);
+        c.getTarget(target);
+        lookDir.subVectors(target, camPos).normalize();
+        c.setTarget(
+          camPos.x + lookDir.x * 0.01,
+          camPos.y + lookDir.y * 0.01,
+          camPos.z + lookDir.z * 0.01,
+          false,
+        );
+        c.mouseButtons.left = ACTION_ROTATE;
       }
     };
     const onKeyUp = (e: KeyboardEvent) => {
       if (e.key === "Shift" && controlsRef.current) {
-        controlsRef.current.mouseButtons.left = ACTION_TRUCK;
+        const c = controlsRef.current;
+        // Restore target along current look direction at saved distance
+        c.getPosition(camPos);
+        c.getTarget(target);
+        lookDir.subVectors(target, camPos).normalize();
+        const dist = savedDistanceRef.current;
+        c.setTarget(
+          camPos.x + lookDir.x * dist,
+          camPos.y + lookDir.y * dist,
+          camPos.z + lookDir.z * dist,
+          false,
+        );
+        c.mouseButtons.left = ACTION_TRUCK;
       }
     };
     window.addEventListener("keydown", onKeyDown);
@@ -113,6 +144,14 @@ function Scene({ url, onLoadingChange, controlsRef }: SplatViewerProps) {
     onLoadingChange?.(true);
   }, [url, onLoadingChange]);
 
+  // Start camera at origin looking forward (-Z), save as reset state
+  useEffect(() => {
+    const controls = activeControlsRef.current;
+    if (!controls) return;
+    controls.setLookAt(0, 0, 0, 0, 0, -5, false);
+    controls.saveState();
+  }, [activeControlsRef]);
+
   return (
     <>
       <CameraControls ref={activeControlsRef} makeDefault />
@@ -131,7 +170,7 @@ export function SplatViewer({
   controlsRef,
 }: SplatViewerProps) {
   return (
-    <Canvas gl={{ antialias: false }} camera={{ position: [0, 1, 3], fov: 60 }}>
+    <Canvas gl={{ antialias: false }} camera={{ position: [0, 0, 1], fov: 60 }}>
       <Scene
         url={url}
         onLoadingChange={onLoadingChange}

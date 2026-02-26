@@ -84,6 +84,8 @@ Defined in `src/index.tsx` via `Bun.serve({ routes: {...} })`:
 - **Prove compatibility before proposing tools.** Before suggesting any pipeline, library, or model, explain WHY it will work with our specific data and constraints -- not just why it works in general. If you can't clearly articulate the compatibility, say "I don't know if this will work" instead of proposing it confidently.
 - **Cheapest failure first.** When proposing a multi-step pipeline that costs money (Modal GPU time, API calls), identify the riskiest assumption and propose a minimal test for THAT assumption before building or running the full thing. Don't burn credits on a pipeline when step 1 is unproven.
 - **Say "I don't know."** If you're pattern-matching from general knowledge rather than reasoning about the specific problem, stop and say so. Confidently wrong is worse than honestly uncertain.
+- **Confidence-tag claims.** When answering about external APIs, ML models, or third-party services, tag every factual claim as `[VERIFIED]` (confirmed via WebSearch/WebFetch this session), `[TRAINING]` (from training data, not verified), or `[INFERRED]` (interpolated from general knowledge). If a plan chains more than one `[INFERRED]` claim, stop and verify before proceeding.
+- **Stress-test plans before execution.** Before implementing any multi-step pipeline that costs money or time, run the `/stress-test` skill against the plan. This decomposes assumptions, verifies claims against real docs, and catches compatibility issues before credits are burned.
 
 ### Prompting Tips (Joshu)
 
