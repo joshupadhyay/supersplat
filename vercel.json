@@ -3,6 +3,7 @@
   "outputDirectory": "dist",
   "framework": null,
   "rewrites": [
+    { "source": "/api/registry", "destination": "/registry.json" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

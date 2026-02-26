@@ -26,6 +26,10 @@ declare module "@react-three/fiber" {
 
 interface SplatViewerProps {
   url: string;
+  secondUrl?: string;
+  offset?: { x: number; y: number; z: number };
+  rotationY?: number;
+  showSecond?: boolean;
   onLoadingChange?: (loading: boolean) => void;
   controlsRef?: React.RefObject<CameraControlsImpl | null>;
 }
@@ -124,25 +128,61 @@ function KeyboardMovement({
   return null;
 }
 
-function Scene({ url, onLoadingChange, controlsRef }: SplatViewerProps) {
+function Scene({
+  url,
+  secondUrl,
+  offset,
+  rotationY,
+  showSecond,
+  onLoadingChange,
+  controlsRef,
+}: SplatViewerProps) {
   const gl = useThree((state) => state.gl);
   const internalControlsRef = useRef<CameraControlsImpl>(null);
   const activeControlsRef = controlsRef ?? internalControlsRef;
 
   const sparkArgs = useMemo(() => [{ renderer: gl }], [gl]);
+
+  // Track loading state for both splats
+  const loadedRef = useRef({ first: false, second: false });
+
   const splatArgs = useMemo(
     () => [
       {
         url,
-        onLoad: () => onLoadingChange?.(false),
+        onLoad: () => {
+          loadedRef.current.first = true;
+          if (!secondUrl || !showSecond || loadedRef.current.second) {
+            onLoadingChange?.(false);
+          }
+        },
       },
     ],
-    [url, onLoadingChange],
+    [url, onLoadingChange, secondUrl, showSecond],
+  );
+
+  const secondSplatArgs = useMemo(
+    () =>
+      secondUrl
+        ? [
+            {
+              url: secondUrl,
+              onLoad: () => {
+                loadedRef.current.second = true;
+                if (loadedRef.current.first) {
+                  onLoadingChange?.(false);
+                }
+              },
+            },
+          ]
+        : null,
+    [secondUrl, onLoadingChange],
   );
 
   useEffect(() => {
+    loadedRef.current = { first: false, second: false };
     onLoadingChange?.(true);
-  }, [url, onLoadingChange]);
+  }, [url, secondUrl, onLoadingChange]);
 
   // Start camera at origin looking forward (-Z), save as reset state
   useEffect(() => {
@@ -152,12 +192,20 @@ function Scene({ url, onLoadingChange, controlsRef }: SplatViewerProps) {
     controls.saveState();
   }, [activeControlsRef]);
 
+  const off = offset ?? { x: 0, y: 0, z: 0 };
+  const yRot = rotationY ?? 0;
+
   return (
     <>
       <CameraControls ref={activeControlsRef} makeDefault />
       <KeyboardMovement controlsRef={activeControlsRef} />
       <sparkRenderer args={sparkArgs}>
         <splatMesh args={splatArgs} rotation={[Math.PI, 0, 0]} />
+        {showSecond && secondSplatArgs && (
+          <group position={[off.x, off.y, off.z]} rotation={[0, yRot, 0]}>
+            <splatMesh args={secondSplatArgs} rotation={[Math.PI, 0, 0]} />
+          </group>
+        )}
       </sparkRenderer>
       <ambientLight intensity={1} />
     </>
@@ -166,6 +214,10 @@ function Scene({ url, onLoadingChange, controlsRef }: SplatViewerProps) {
 
 export function SplatViewer({
   url,
+  secondUrl,
+  offset,
+  rotationY,
+  showSecond,
   onLoadingChange,
   controlsRef,
 }: SplatViewerProps) {
@@ -173,6 +225,10 @@ export function SplatViewer({
     <Canvas gl={{ antialias: false }} camera={{ position: [0, 0, 1], fov: 60 }}>
       <Scene
         url={url}
+        secondUrl={secondUrl}
+        offset={offset}
+        rotationY={rotationY}
+        showSecond={showSecond}
         onLoadingChange={onLoadingChange}
         controlsRef={controlsRef}
       />

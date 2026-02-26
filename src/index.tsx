@@ -3,12 +3,25 @@ import index from "./index.html";
 
 const server = serve({
   routes: {
-    // Serve .ply splat files from pipeline/
+    // Serve splat files from pipeline/ or data/splats/marble/
     "/splats/:filename": async (req) => {
-      const file = Bun.file(`./pipeline/${req.params.filename}`);
-      if (!(await file.exists())) return new Response("Not found", { status: 404 });
+      const dirs = ["./data/splats/marble", "./pipeline"];
+      for (const dir of dirs) {
+        const file = Bun.file(`${dir}/${req.params.filename}`);
+        if (await file.exists()) {
+          return new Response(file, {
+            headers: { "Content-Type": "application/octet-stream" },
+          });
+        }
+      }
+      return new Response("Not found", { status: 404 });
+    },
+
+    "/api/registry": async () => {
+      const file = Bun.file("./data/splats/marble/registry.json");
+      if (!(await file.exists())) return Response.json({ worlds: [] });
       return new Response(file, {
-        headers: { "Content-Type": "application/octet-stream" },
+        headers: { "Content-Type": "application/json" },
       });
     },
 
