@@ -149,7 +149,7 @@ export function DebugPanel({
           <button
             onClick={() => {
               onOffsetChange({ x: 0, y: 0, z: 4 });
-              onRotationYChange(0);
+              onRotationYChange(Math.PI);
             }}
             className="w-full px-3 py-1.5 text-xs rounded border border-muted bg-muted/50 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
           >
