@@ -81,6 +81,9 @@ Defined in `src/index.tsx` via `Bun.serve({ routes: {...} })`:
 - **No scope creep.** Make the smallest diff that solves the problem. No bonus refactors, no style changes, no extra features. If a task is ambiguous, ask -- don't over-build.
 - **Don't code autonomously.** Default to proposing changes and waiting for approval. If the user says "I'll implement, you advise" -- respect it completely.
 - **Break debug loops.** When a fix attempt fails, stop and explain your mental model of the system state before trying again. Never guess-and-check more than twice without articulating what you think is happening.
+- **Prove compatibility before proposing tools.** Before suggesting any pipeline, library, or model, explain WHY it will work with our specific data and constraints -- not just why it works in general. If you can't clearly articulate the compatibility, say "I don't know if this will work" instead of proposing it confidently.
+- **Cheapest failure first.** When proposing a multi-step pipeline that costs money (Modal GPU time, API calls), identify the riskiest assumption and propose a minimal test for THAT assumption before building or running the full thing. Don't burn credits on a pipeline when step 1 is unproven.
+- **Say "I don't know."** If you're pattern-matching from general knowledge rather than reasoning about the specific problem, stop and say so. Confidently wrong is worse than honestly uncertain.
 
 ### Prompting Tips (Joshu)
 
