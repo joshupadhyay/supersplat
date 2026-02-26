@@ -1,0 +1,20 @@
+# Large files not needed for build
+pipeline/scene-sequence.ply
+pipeline/scene-multi-3pano.ply
+data/da3-output/
+data/gsplat-test*/
+data/stmarks-giant/
+data/streetview*/
+data/splats/stmarks-overlap-scene.ply
+
+# Pipeline artifacts
+pipeline/data/
+pipeline/__pycache__/
+*.pyc
+
+# Output JSONs
+da3_output.json
+da3_verify_output.json
+gsplat_output.json
+pipeline/da3_output.json
+pipeline/da3_verify_output.json
