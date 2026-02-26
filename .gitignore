@@ -33,5 +33,10 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # Finder (MacOS) folder config
 .DS_Store
 
+# Python
+*.pyc
+__pycache__/
+
 # Pipeline intermediate data (crops, test images, metadata)
 pipeline/data/
+.vercel

@@ -2,3 +2,4 @@ pipeline/scene-multi-3pano.ply filter=lfs diff=lfs merge=lfs -text
 pipeline/scene-sequence.ply filter=lfs diff=lfs merge=lfs -text
 pipeline/scene.ply filter=lfs diff=lfs merge=lfs -text
 *.ply filter=lfs diff=lfs merge=lfs -text
+*.spz filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,41 @@
+{
+  "origin": {
+    "lat": 40.728118959310166,
+    "lng": -73.98652167128083
+  },
+  "worlds": [
+    {
+      "id": "marble-dual",
+      "file": "pano00.spz",
+      "secondFile": "pano02.spz",
+      "file_size_mb": 52,
+      "source_pano_id": "e4RgCEynTaFEqRllkPoYSw",
+      "center": {
+        "lat": 40.728118959310166,
+        "lng": -73.98652167128083
+      },
+      "heading": 118.85633,
+      "model": "Marble 0.1-mini",
+      "world_id": "unknown",
+      "marble_url": "https://marble.worldlabs.ai/world/43d081c5-481f-42fc-8a15-2ab4d999d2ee",
+      "estimated_radius_m": null,
+      "generated_at": "2026-02-26T16:36:57Z",
+      "status": "completed"
+    },
+    {
+      "id": "anysplat-scene",
+      "file": "scene.ply",
+      "file_size_mb": 13,
+      "source_pano_id": null,
+      "center": null,
+      "heading": 0,
+      "note": "Recommend Shift+Drag to look around. The world quickly disintegrates if you move.",
+      "model": "AnySplat",
+      "world_id": "unknown",
+      "marble_url": null,
+      "estimated_radius_m": null,
+      "generated_at": "2026-02-25T00:00:00Z",
+      "status": "completed"
+    }
+  ]
+}
