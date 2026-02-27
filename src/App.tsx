@@ -3,6 +3,7 @@ import { SplatViewer } from "./components/SplatViewer";
 import { ControlsPanel } from "./components/ControlsPanel";
 import { DebugPanel } from "./components/DebugPanel";
 import { TransitionOverlay } from "./components/TransitionOverlay";
+import { MiniMap } from "./components/MiniMap";
 import { useSplatUrl } from "./hooks/useSplatUrl";
 import { useStreetNav } from "./hooks/useStreetNav";
 import type CameraControlsImpl from "camera-controls";
@@ -19,8 +20,26 @@ export function App() {
 
   // Debug panel state (always visible)
   const [debugOffset, setDebugOffset] = useState({ x: 0, y: 0, z: 4 });
-  const [debugRotationY, setDebugRotationY] = useState(0);
+  const [debugRotationY, setDebugRotationY] = useState(Math.PI);
   const [debugShowSecond, setDebugShowSecond] = useState(true);
+
+  // Camera position for mini-map
+  const [cameraPos, setCameraPos] = useState({ x: 0, z: 0 });
+  const handleCameraMove = useCallback(
+    (pos: { x: number; y: number; z: number }) => {
+      setCameraPos((prev) => {
+        // Only update if moved enough to avoid unnecessary re-renders
+        if (
+          Math.abs(prev.x - pos.x) > 0.01 ||
+          Math.abs(prev.z - pos.z) > 0.01
+        ) {
+          return { x: pos.x, z: pos.z };
+        }
+        return prev;
+      });
+    },
+    [],
+  );
 
   // Single-splat mode if ?splat= is set, otherwise multi-world with nav
   const hasSplatParam =
@@ -89,10 +108,18 @@ export function App() {
           rotationY={debugRotationY}
           showSecond={!!nav.secondUrl && debugShowSecond}
           onLoadingChange={handleLoadingChange}
+          onCameraMove={handleCameraMove}
           controlsRef={controlsRef}
         />
       )}
       <TransitionOverlay active={overlayActive} />
+      {nav.center.lat !== 0 && (
+        <MiniMap
+          center={nav.center}
+          heading={nav.heading}
+          cameraPos={cameraPos}
+        />
+      )}
       {nav.secondUrl && (
         <DebugPanel
           offset={debugOffset}

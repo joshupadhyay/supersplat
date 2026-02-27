@@ -31,6 +31,7 @@ interface SplatViewerProps {
   rotationY?: number;
   showSecond?: boolean;
   onLoadingChange?: (loading: boolean) => void;
+  onCameraMove?: (pos: { x: number; y: number; z: number }) => void;
   controlsRef?: React.RefObject<CameraControlsImpl | null>;
 }
 
@@ -135,6 +136,7 @@ function Scene({
   rotationY,
   showSecond,
   onLoadingChange,
+  onCameraMove,
   controlsRef,
 }: SplatViewerProps) {
   const gl = useThree((state) => state.gl);
@@ -198,6 +200,15 @@ function Scene({
     controls.saveState();
   }, [activeControlsRef]);
 
+  // Report camera position to parent for mini-map
+  const cameraPosVec = useMemo(() => new Vector3(), []);
+  useFrame(() => {
+    const controls = activeControlsRef.current;
+    if (!controls || !onCameraMove) return;
+    controls.getPosition(cameraPosVec);
+    onCameraMove({ x: cameraPosVec.x, y: cameraPosVec.y, z: cameraPosVec.z });
+  });
+
   const off = offset ?? { x: 0, y: 0, z: 0 };
   const yRot = rotationY ?? 0;
 
@@ -225,6 +236,7 @@ export function SplatViewer({
   rotationY,
   showSecond,
   onLoadingChange,
+  onCameraMove,
   controlsRef,
 }: SplatViewerProps) {
   return (
@@ -236,6 +248,7 @@ export function SplatViewer({
         rotationY={rotationY}
         showSecond={showSecond}
         onLoadingChange={onLoadingChange}
+        onCameraMove={onCameraMove}
         controlsRef={controlsRef}
       />
     </Canvas>
