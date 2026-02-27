@@ -5,7 +5,7 @@ const server = serve({
   routes: {
     // Serve splat files from pipeline/ or data/splats/marble/
     "/splats/:filename": async (req) => {
-      const dirs = ["./data/splats/marble", "./pipeline"];
+      const dirs = ["./data/splats/marble", "./data/splats/marble/plus-test", "./pipeline"];
       for (const dir of dirs) {
         const file = Bun.file(`${dir}/${req.params.filename}`);
         if (await file.exists()) {
