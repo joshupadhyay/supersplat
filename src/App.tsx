@@ -118,6 +118,10 @@ export function App() {
           center={nav.center}
           heading={nav.heading}
           cameraPos={cameraPos}
+          allWorlds={nav.worlds
+            .filter((w) => w.center?.lat)
+            .map((w) => ({ lat: w.center.lat, lng: w.center.lng, id: w.id }))}
+          currentIndex={nav.currentIndex}
         />
       )}
       {nav.secondUrl && (

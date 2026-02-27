@@ -5,13 +5,23 @@ import L from "leaflet";
 const LEAFLET_CSS =
   "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
 
+interface WorldPos {
+  lat: number;
+  lng: number;
+  id: string;
+}
+
 interface MiniMapProps {
-  /** Center of the splat in real-world coords */
+  /** Center of the current splat in real-world coords */
   center: { lat: number; lng: number };
   /** Street heading in degrees from north, clockwise */
   heading: number;
   /** Camera position in Three.js world space */
   cameraPos: { x: number; z: number };
+  /** All world center positions */
+  allWorlds: WorldPos[];
+  /** Index of the currently active world */
+  currentIndex: number;
   /** Meters per local unit (calibrated from collider mesh) */
   scale?: number;
 }
@@ -40,12 +50,15 @@ export function MiniMap({
   center,
   heading,
   cameraPos,
+  allWorlds,
+  currentIndex,
   scale = 1.25,
 }: MiniMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.CircleMarker | null>(null);
   const headingLineRef = useRef<L.Polyline | null>(null);
+  const worldMarkersRef = useRef<L.CircleMarker[]>([]);
   const cssLoadedRef = useRef(false);
 
   // Load Leaflet CSS once
@@ -77,14 +90,20 @@ export function MiniMap({
       maxZoom: 22,
     }).addTo(map);
 
-    // Pano center marker
-    L.circleMarker([center.lat, center.lng], {
-      radius: 4,
-      color: "#666",
-      fillColor: "#888",
-      fillOpacity: 0.6,
-      weight: 1,
-    }).addTo(map);
+    // All pano center markers
+    const wMarkers = allWorlds.map((w, i) => {
+      const isActive = i === currentIndex;
+      return L.circleMarker([w.lat, w.lng], {
+        radius: isActive ? 6 : 4,
+        color: isActive ? "#f59e0b" : "#666",
+        fillColor: isActive ? "#fbbf24" : "#888",
+        fillOpacity: isActive ? 0.9 : 0.5,
+        weight: isActive ? 2 : 1,
+      })
+        .bindTooltip(w.id, { permanent: false, direction: "top", offset: [0, -8] })
+        .addTo(map);
+    });
+    worldMarkersRef.current = wMarkers;
 
     // Camera position marker
     const marker = L.circleMarker([center.lat, center.lng], {
@@ -115,6 +134,20 @@ export function MiniMap({
       headingLineRef.current = null;
     };
   }, [center.lat, center.lng]);
+
+  // Update active world marker styling when index changes
+  useEffect(() => {
+    worldMarkersRef.current.forEach((wm, i) => {
+      const isActive = i === currentIndex;
+      wm.setStyle({
+        radius: isActive ? 6 : 4,
+        color: isActive ? "#f59e0b" : "#666",
+        fillColor: isActive ? "#fbbf24" : "#888",
+        fillOpacity: isActive ? 0.9 : 0.5,
+        weight: isActive ? 2 : 1,
+      });
+    });
+  }, [currentIndex]);
 
   // Update marker position when camera moves
   useEffect(() => {
@@ -168,10 +201,11 @@ export function MiniMap({
         style={{
           width: 220,
           height: 220,
-          borderRadius: 12,
+          borderRadius: "50%",
           overflow: "hidden",
           border: "2px solid rgba(255,255,255,0.15)",
           boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
+          transform: `rotate(${-heading}deg)`,
         }}
       />
     </div>
