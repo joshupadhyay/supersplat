@@ -46,9 +46,10 @@ export function App() {
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).has("splat");
 
+  // Fall back to default splat URL when registry is empty (e.g. production static hosting)
   const activeUrl = hasSplatParam
     ? splatParam
-    : displayUrl || nav.currentUrl;
+    : displayUrl || nav.currentUrl || splatParam;
 
   // Sync displayUrl when nav.currentUrl changes without a transition (initial load)
   if (!hasSplatParam && !displayUrl && nav.currentUrl) {
@@ -139,7 +140,7 @@ export function App() {
         onReset={handleReset}
         note={nav.note}
         nav={
-          hasSplatParam
+          hasSplatParam || nav.worlds.length === 0
             ? undefined
             : {
                 currentIndex: nav.currentIndex,
