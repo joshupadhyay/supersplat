@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import plugin from "bun-plugin-tailwind";
 import { existsSync } from "fs";
-import { rm, mkdir, cp, copyFile } from "fs/promises";
+import { rm } from "fs/promises";
 import path from "path";
 
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
@@ -145,29 +145,5 @@ const outputTable = result.outputs.map(output => ({
 
 console.table(outputTable);
 const buildTime = (end - start).toFixed(2);
-
-// Copy static assets for deployment (splats + registry)
-console.log("📦 Copying static assets...");
-const splatsDir = path.join(outdir, "splats");
-await mkdir(splatsDir, { recursive: true });
-
-const splatSources = [
-  { src: "data/splats/marble/pano00.spz", dest: "pano00.spz" },
-  { src: "data/splats/marble/pano02.spz", dest: "pano02.spz" },
-  { src: "pipeline/scene.ply", dest: "scene.ply" },
-];
-
-for (const { src, dest } of splatSources) {
-  if (existsSync(src)) {
-    await copyFile(src, path.join(splatsDir, dest));
-    console.log(`  ✓ ${dest}`);
-  } else {
-    console.log(`  ⚠ ${src} not found, skipping`);
-  }
-}
-
-// Copy registry.json for static API serving
-await copyFile("data/splats/marble/registry.json", path.join(outdir, "registry.json"));
-console.log("  ✓ registry.json");
 
 console.log(`\n✅ Build completed in ${buildTime}ms\n`);

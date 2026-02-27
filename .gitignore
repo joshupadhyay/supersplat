@@ -39,4 +39,9 @@ __pycache__/
 
 # Pipeline intermediate data (crops, test images, metadata)
 pipeline/data/
+
+# Splat files (served from R2, not bundled)
+data/splats/
+*.spz
+
 .vercel

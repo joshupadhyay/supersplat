@@ -31,6 +31,7 @@
     "@types/bun": "latest",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/three": "^0.183.1"
+    "@types/three": "^0.183.1",
+    "wrangler": "^4.69.0"
   }
 }
