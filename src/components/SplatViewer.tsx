@@ -43,6 +43,7 @@ interface SplatViewerProps {
 // camera-controls ACTION enum values
 const ACTION_ROTATE = 1;
 const ACTION_TRUCK = 2;
+const ACTION_NONE = 0;
 
 function KeyboardMovement({
   controlsRef,
@@ -64,35 +65,37 @@ function KeyboardMovement({
     };
   }, []);
 
-  // Default drag = first-person look-around (rotate), shift+drag = pan/raise (truck)
+  // Mirror Spark.js controls: left-drag = rotate, right-drag = slide, scroll = forward/back
   useEffect(() => {
     const controls = controlsRef.current;
     if (!controls) return;
 
     controls.mouseButtons.left = ACTION_ROTATE;
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Shift" && controlsRef.current) {
-        controlsRef.current.mouseButtons.left = ACTION_TRUCK;
-      }
-    };
-    const onKeyUp = (e: KeyboardEvent) => {
-      if (e.key === "Shift" && controlsRef.current) {
-        controlsRef.current.mouseButtons.left = ACTION_ROTATE;
-      }
-    };
-    window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("keyup", onKeyUp);
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      window.removeEventListener("keyup", onKeyUp);
-    };
+    controls.mouseButtons.right = ACTION_TRUCK;
+    controls.mouseButtons.middle = ACTION_NONE;
+    controls.mouseButtons.wheel = ACTION_NONE; // we handle scroll manually below
   }, [controlsRef]);
+
+  // Scroll = forward/backward movement (like Spark), not dolly/zoom
+  useEffect(() => {
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const c = controlsRef.current;
+      if (!c || paused) return;
+      const speed = e.deltaY * 0.005;
+      c.forward(-speed, false);
+    };
+    const canvas = document.querySelector("canvas");
+    if (!canvas) return;
+    canvas.addEventListener("wheel", onWheel, { passive: false });
+    return () => canvas.removeEventListener("wheel", onWheel);
+  }, [controlsRef, paused]);
 
   useFrame((_, delta) => {
     if (!controlsRef.current || paused) return;
-    const speed = 2 * delta;
     const keys = keysPressed.current;
+    const shift = keys.has("ShiftLeft") || keys.has("ShiftRight");
+    const speed = 2 * delta * (shift ? 5 : 1);
     if (keys.has("KeyW") || keys.has("ArrowUp"))
       controlsRef.current.forward(speed, false);
     if (keys.has("KeyS") || keys.has("ArrowDown"))
@@ -101,6 +104,10 @@ function KeyboardMovement({
       controlsRef.current.truck(-speed, 0, false);
     if (keys.has("KeyD") || keys.has("ArrowRight"))
       controlsRef.current.truck(speed, 0, false);
+    if (keys.has("KeyR") || keys.has("PageUp"))
+      controlsRef.current.truck(0, speed, false);
+    if (keys.has("KeyF") || keys.has("PageDown"))
+      controlsRef.current.truck(0, -speed, false);
   });
 
   return null;

@@ -22,9 +22,9 @@ export function ControlsPanel({ onReset, nav, note }: ControlsPanelProps) {
       <Card className="pointer-events-auto bg-card/80 backdrop-blur-sm border-muted w-72">
         <CardContent className="p-4 space-y-3">
           <div className="text-xs text-muted-foreground space-y-1">
-            <p>Drag to look around &middot; Scroll to zoom</p>
-            <p>Shift + Drag to move up/down</p>
-            <p>WASD / Arrow keys to move</p>
+            <p>Drag to look around &middot; Right-drag to slide</p>
+            <p>Scroll to move forward/back</p>
+            <p>WASD to move &middot; R/F up/down &middot; Shift = fast</p>
           </div>
           {note && (
             <p className="text-xs text-amber-400/90 italic">{note}</p>
