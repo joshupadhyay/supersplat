@@ -22,8 +22,8 @@ export function ControlsPanel({ onReset, nav, note }: ControlsPanelProps) {
       <Card className="pointer-events-auto bg-card/80 backdrop-blur-sm border-muted w-72">
         <CardContent className="p-4 space-y-3">
           <div className="text-xs text-muted-foreground space-y-1">
-            <p>Drag to pan &middot; Scroll to zoom</p>
-            <p>Shift + Drag to look around</p>
+            <p>Drag to look around &middot; Scroll to zoom</p>
+            <p>Shift + Drag to move up/down</p>
             <p>WASD / Arrow keys to move</p>
           </div>
           {note && (
