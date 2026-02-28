@@ -9,6 +9,8 @@ interface DebugHudProps {
   activeIndex: number;
   overrides: Record<string, SplatOverride>;
   onOverrideChange: (id: string, override: SplatOverride) => void;
+  loadEnabled: Set<number>;
+  onLoadToggle: (index: number) => void;
 }
 
 function SliderRow({
@@ -51,6 +53,8 @@ export function DebugHud({
   activeIndex,
   overrides,
   onOverrideChange,
+  loadEnabled,
+  onLoadToggle,
 }: DebugHudProps) {
   return (
     <div className="absolute top-4 left-4 pointer-events-none z-10 max-h-[90vh] overflow-y-auto">
@@ -71,12 +75,15 @@ export function DebugHud({
             const isOrigin = i === 0;
             return (
               <div key={slot.id} className="space-y-1 border-t border-muted pt-2">
-                <div className="flex justify-between text-xs">
-                  <span className="font-medium truncate">
+                <div className="flex items-center gap-2 text-xs">
+                  <input
+                    type="checkbox"
+                    checked={loadEnabled.has(i)}
+                    onChange={() => onLoadToggle(i)}
+                    className="accent-primary"
+                  />
+                  <span className="font-medium truncate flex-1">
                     {i}: {slot.id.slice(0, 20)}
-                  </span>
-                  <span className="text-muted-foreground">
-                    {slot.shouldLoad ? "loaded" : "—"}
                   </span>
                 </div>
                 <div className="font-mono text-xs text-muted-foreground">

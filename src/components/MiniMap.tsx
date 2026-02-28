@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 
 // Inline Leaflet CSS to avoid needing a separate CSS import
@@ -54,6 +54,9 @@ export function MiniMap({
   currentIndex,
   scale = 1.25,
 }: MiniMapProps) {
+  const [headingOffset, setHeadingOffset] = useState(0);
+  const effectiveHeading = heading + headingOffset;
+
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.CircleMarker | null>(null);
@@ -155,7 +158,7 @@ export function MiniMap({
 
     const [lat, lng] = cameraToLatLng(
       center,
-      heading,
+      effectiveHeading,
       cameraPos.x,
       cameraPos.z,
       scale,
@@ -164,10 +167,8 @@ export function MiniMap({
     markerRef.current.setLatLng([lat, lng]);
 
     // Short heading line showing which way the camera faces
-    // (We'd need camera rotation for true heading, but for now
-    // just show the dot position)
     const lineLen = 0.00003; // ~3m
-    const theta = (heading * Math.PI) / 180;
+    const theta = (effectiveHeading * Math.PI) / 180;
     headingLineRef.current?.setLatLngs([
       [lat, lng],
       [lat + lineLen * Math.cos(theta), lng + lineLen * Math.sin(theta)],
@@ -177,7 +178,7 @@ export function MiniMap({
     mapRef.current.setView([lat, lng], mapRef.current.getZoom(), {
       animate: false,
     });
-  }, [center, heading, cameraPos.x, cameraPos.z, scale]);
+  }, [center, effectiveHeading, cameraPos.x, cameraPos.z, scale]);
 
   const distFromOrigin = Math.sqrt(cameraPos.x ** 2 + cameraPos.z ** 2);
   const distMeters = (distFromOrigin * scale).toFixed(1);
@@ -195,6 +196,43 @@ export function MiniMap({
         }}
       >
         {distMeters}m from center ({distFromOrigin.toFixed(1)} units)
+        <div style={{ display: "flex", alignItems: "center", gap: 4, justifyContent: "center", marginTop: 2 }}>
+          <button
+            onClick={() => setHeadingOffset((o) => o - 1)}
+            style={{
+              background: "rgba(255,255,255,0.1)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              color: "#94a3b8",
+              borderRadius: 3,
+              width: 20,
+              height: 20,
+              cursor: "pointer",
+              fontSize: 12,
+              lineHeight: 1,
+              padding: 0,
+            }}
+          >
+            −
+          </button>
+          <span>hdg {headingOffset >= 0 ? "+" : ""}{headingOffset}°</span>
+          <button
+            onClick={() => setHeadingOffset((o) => o + 1)}
+            style={{
+              background: "rgba(255,255,255,0.1)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              color: "#94a3b8",
+              borderRadius: 3,
+              width: 20,
+              height: 20,
+              cursor: "pointer",
+              fontSize: 12,
+              lineHeight: 1,
+              padding: 0,
+            }}
+          >
+            +
+          </button>
+        </div>
       </div>
       <div
         ref={containerRef}
@@ -205,7 +243,7 @@ export function MiniMap({
           overflow: "hidden",
           border: "2px solid rgba(255,255,255,0.15)",
           boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
-          transform: `rotate(${-heading}deg)`,
+          transform: `rotate(${-effectiveHeading}deg)`,
         }}
       />
     </div>
