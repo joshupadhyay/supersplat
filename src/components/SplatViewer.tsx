@@ -64,51 +64,21 @@ function KeyboardMovement({
     };
   }, []);
 
-  // Shift+drag = first-person look-around, default drag = pan (truck)
-  const savedDistanceRef = useRef(5);
-
+  // Default drag = first-person look-around (rotate), shift+drag = pan/raise (truck)
   useEffect(() => {
     const controls = controlsRef.current;
     if (!controls) return;
 
-    controls.mouseButtons.left = ACTION_TRUCK;
-
-    const camPos = new Vector3();
-    const target = new Vector3();
-    const lookDir = new Vector3();
+    controls.mouseButtons.left = ACTION_ROTATE;
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Shift" && controlsRef.current) {
-        const c = controlsRef.current;
-        // Save orbit distance, then collapse target to near-camera for first-person rotation
-        savedDistanceRef.current = c.distance;
-        c.getPosition(camPos);
-        c.getTarget(target);
-        lookDir.subVectors(target, camPos).normalize();
-        c.setTarget(
-          camPos.x + lookDir.x * 0.01,
-          camPos.y + lookDir.y * 0.01,
-          camPos.z + lookDir.z * 0.01,
-          false,
-        );
-        c.mouseButtons.left = ACTION_ROTATE;
+        controlsRef.current.mouseButtons.left = ACTION_TRUCK;
       }
     };
     const onKeyUp = (e: KeyboardEvent) => {
       if (e.key === "Shift" && controlsRef.current) {
-        const c = controlsRef.current;
-        // Restore target along current look direction at saved distance
-        c.getPosition(camPos);
-        c.getTarget(target);
-        lookDir.subVectors(target, camPos).normalize();
-        const dist = savedDistanceRef.current;
-        c.setTarget(
-          camPos.x + lookDir.x * dist,
-          camPos.y + lookDir.y * dist,
-          camPos.z + lookDir.z * dist,
-          false,
-        );
-        c.mouseButtons.left = ACTION_TRUCK;
+        controlsRef.current.mouseButtons.left = ACTION_ROTATE;
       }
     };
     window.addEventListener("keydown", onKeyDown);
@@ -206,7 +176,7 @@ function Scene({
   useEffect(() => {
     const controls = activeControlsRef.current;
     if (!controls) return;
-    controls.setLookAt(0, 0, 0, 0, 0, 5, false);
+    controls.setLookAt(0, 0, 0, 0, 0, 0.01, false);
     controls.saveState();
   }, [activeControlsRef]);
 
