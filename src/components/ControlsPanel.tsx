@@ -11,22 +11,16 @@ interface NavControls {
 }
 
 interface ControlsPanelProps {
-  loading: boolean;
   onReset: () => void;
   nav?: NavControls;
   note?: string;
 }
 
-export function ControlsPanel({ loading, onReset, nav, note }: ControlsPanelProps) {
+export function ControlsPanel({ onReset, nav, note }: ControlsPanelProps) {
   return (
     <div className="absolute bottom-4 left-4 pointer-events-none z-10">
       <Card className="pointer-events-auto bg-card/80 backdrop-blur-sm border-muted w-72">
         <CardContent className="p-4 space-y-3">
-          {loading && (
-            <p className="text-sm text-muted-foreground animate-pulse">
-              Loading splat...
-            </p>
-          )}
           <div className="text-xs text-muted-foreground space-y-1">
             <p>Drag to pan &middot; Scroll to zoom</p>
             <p>Shift + Drag to look around</p>

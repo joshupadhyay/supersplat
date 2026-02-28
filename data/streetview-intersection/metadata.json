@@ -1,0 +1,240 @@
+{
+  "start_lat": 40.7281176,
+  "start_lng": -73.9865227,
+  "num_panos": 10,
+  "zoom": 3,
+  "mode": "overlap",
+  "total_images": 240,
+  "panos": [
+    {
+      "pano_id": "7m6cOuZYXUqYeRz5aXXylA",
+      "lat": 40.728523492401955,
+      "lng": -73.98748475165084,
+      "heading": 118.16324,
+      "date": "2024-09",
+      "image_width": 16384,
+      "image_height": 8192,
+      "links": [
+        {
+          "panoId": "L7yR6fnySMR6vp1JQw2Fnw",
+          "heading": 298.57159423828125,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 12.327885
+        },
+        {
+          "panoId": "5USwRiSORejRUoXuTQv-qQ",
+          "heading": 118.76173400878906,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 12.116843
+        }
+      ]
+    },
+    {
+      "pano_id": "5USwRiSORejRUoXuTQv-qQ",
+      "lat": 40.72847187035837,
+      "lng": -73.9873606454758,
+      "heading": 117.87487,
+      "date": "2024-09",
+      "image_width": 16384,
+      "image_height": 8192,
+      "links": [
+        {
+          "panoId": "NazOX3vvO6BGGFpyUCet-g",
+          "heading": 118.93287658691406,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 12.029625
+        },
+        {
+          "panoId": "7m6cOuZYXUqYeRz5aXXylA",
+          "heading": 298.76171875,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 12.253771
+        }
+      ]
+    },
+    {
+      "pano_id": "NazOX3vvO6BGGFpyUCet-g",
+      "lat": 40.7284244272926,
+      "lng": -73.98724738955389,
+      "heading": 118.98159,
+      "date": "2024-09",
+      "image_width": 16384,
+      "image_height": 8192,
+      "links": [
+        {
+          "panoId": "I17zVOZtGtKS0DIkvz9tkw",
+          "heading": 119.017333984375,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.887692
+        },
+        {
+          "panoId": "5USwRiSORejRUoXuTQv-qQ",
+          "heading": 298.9328918457031,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 12.116843
+        }
+      ]
+    },
+    {
+      "pano_id": "I17zVOZtGtKS0DIkvz9tkw",
+      "lat": 40.7283792313225,
+      "lng": -73.98713987258756,
+      "heading": 119.04094,
+      "date": "2024-09",
+      "image_width": 16384,
+      "image_height": 8192,
+      "links": [
+        {
+          "panoId": "bNXGRm3HmDoFZX7q3ilf_g",
+          "heading": 118.6363525390625,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.738049
+        },
+        {
+          "panoId": "NazOX3vvO6BGGFpyUCet-g",
+          "heading": 299.017333984375,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 12.029625
+        }
+      ]
+    },
+    {
+      "pano_id": "bNXGRm3HmDoFZX7q3ilf_g",
+      "lat": 40.728336077001984,
+      "lng": -73.98703558376286,
+      "heading": 118.78026,
+      "date": "2024-09",
+      "image_width": 16384,
+      "image_height": 8192,
+      "links": [
+        {
+          "panoId": "I17zVOZtGtKS0DIkvz9tkw",
+          "heading": 298.6363525390625,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.887692
+        },
+        {
+          "panoId": "ZmOUqqIoq1LU__wSYbVuWQ",
+          "heading": 118.94464111328125,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.624787
+        }
+      ]
+    },
+    {
+      "pano_id": "ZmOUqqIoq1LU__wSYbVuWQ",
+      "lat": 40.72829229380533,
+      "lng": -73.98693111553686,
+      "heading": 118.07408,
+      "date": "2024-09",
+      "image_width": 16384,
+      "image_height": 8192,
+      "links": [
+        {
+          "panoId": "bNXGRm3HmDoFZX7q3ilf_g",
+          "heading": 298.94464111328125,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.738049
+        },
+        {
+          "panoId": "mCj2DiglVygCzO7jIP6nzA",
+          "heading": 119.11129760742188,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.464638
+        }
+      ]
+    },
+    {
+      "pano_id": "mCj2DiglVygCzO7jIP6nzA",
+      "lat": 40.72824911754279,
+      "lng": -73.98682879939089,
+      "heading": 119.248245,
+      "date": "2024-09",
+      "image_width": 16384,
+      "image_height": 8192,
+      "links": [
+        {
+          "panoId": "01_HlN9Fi2xgzAL6MRkihg",
+          "heading": 119.1844482421875,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.436891
+        },
+        {
+          "panoId": "ZmOUqqIoq1LU__wSYbVuWQ",
+          "heading": 299.1112976074219,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.624787
+        }
+      ]
+    },
+    {
+      "pano_id": "01_HlN9Fi2xgzAL6MRkihg",
+      "lat": 40.72820748144431,
+      "lng": -73.98673042877671,
+      "heading": 119.438126,
+      "date": "2024-09",
+      "image_width": 16384,
+      "image_height": 8192,
+      "links": [
+        {
+          "panoId": "3watQ9z0aW2S0WSH5nru_A",
+          "heading": 119.22330474853516,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.316702
+        },
+        {
+          "panoId": "mCj2DiglVygCzO7jIP6nzA",
+          "heading": 299.1844482421875,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.464638
+        }
+      ]
+    },
+    {
+      "pano_id": "3watQ9z0aW2S0WSH5nru_A",
+      "lat": 40.72816349804669,
+      "lng": -73.98662667776438,
+      "heading": 119.13939,
+      "date": "2024-09",
+      "image_width": 16384,
+      "image_height": 8192,
+      "links": [
+        {
+          "panoId": "e4RgCEynTaFEqRllkPoYSw",
+          "heading": 119.23595428466797,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.132327
+        },
+        {
+          "panoId": "01_HlN9Fi2xgzAL6MRkihg",
+          "heading": 299.2232971191406,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.436891
+        }
+      ]
+    },
+    {
+      "pano_id": "e4RgCEynTaFEqRllkPoYSw",
+      "lat": 40.728118959310166,
+      "lng": -73.98652167128083,
+      "heading": 118.85633,
+      "date": "2024-09",
+      "image_width": 16384,
+      "image_height": 8192,
+      "links": [
+        {
+          "panoId": "3watQ9z0aW2S0WSH5nru_A",
+          "heading": 299.2359619140625,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.316702
+        },
+        {
+          "panoId": "kBMePboOFJgrnbyy3EXJQw",
+          "heading": 119.12561798095703,
+          "text": "St Marks Pl",
+          "elevationAboveEgm96": 11.019317
+        }
+      ]
+    }
+  ]
+}

@@ -7,6 +7,8 @@ import type {
   SparkRenderer as SparkRendererClass,
   SplatMesh as SplatMeshClass,
 } from "@sparkjsdev/spark";
+import { ProximityMarkers } from "./ProximityMarkers";
+import type { Marker } from "../data/markers";
 
 // Register Spark classes with R3F
 import "./spark/SparkRenderer";
@@ -30,6 +32,9 @@ interface SplatViewerProps {
   offset?: { x: number; y: number; z: number };
   rotationY?: number;
   showSecond?: boolean;
+  paused?: boolean;
+  markers?: Marker[];
+  onActiveMarkerChange?: (marker: Marker | null) => void;
   onLoadingChange?: (loading: boolean) => void;
   onCameraMove?: (pos: { x: number; y: number; z: number }) => void;
   controlsRef?: React.RefObject<CameraControlsImpl | null>;
@@ -41,8 +46,10 @@ const ACTION_TRUCK = 2;
 
 function KeyboardMovement({
   controlsRef,
+  paused,
 }: {
   controlsRef: React.RefObject<CameraControlsImpl | null>;
+  paused?: boolean;
 }) {
   const keysPressed = useRef<Set<string>>(new Set());
 
@@ -113,7 +120,7 @@ function KeyboardMovement({
   }, [controlsRef]);
 
   useFrame((_, delta) => {
-    if (!controlsRef.current) return;
+    if (!controlsRef.current || paused) return;
     const speed = 2 * delta;
     const keys = keysPressed.current;
     if (keys.has("KeyW") || keys.has("ArrowUp"))
@@ -135,6 +142,9 @@ function Scene({
   offset,
   rotationY,
   showSecond,
+  paused,
+  markers,
+  onActiveMarkerChange,
   onLoadingChange,
   onCameraMove,
   controlsRef,
@@ -214,8 +224,8 @@ function Scene({
 
   return (
     <>
-      <CameraControls ref={activeControlsRef} makeDefault />
-      <KeyboardMovement controlsRef={activeControlsRef} />
+      <CameraControls ref={activeControlsRef} makeDefault enabled={!paused} />
+      <KeyboardMovement controlsRef={activeControlsRef} paused={paused} />
       <sparkRenderer args={sparkArgs}>
         <splatMesh args={splatArgs} rotation={[Math.PI, 0, 0]} />
         {showSecond && secondSplatArgs && (
@@ -224,6 +234,14 @@ function Scene({
           </group>
         )}
       </sparkRenderer>
+      {markers && markers.length > 0 && onActiveMarkerChange && (
+        <ProximityMarkers
+          markers={markers}
+          controlsRef={activeControlsRef}
+          paused={!!paused}
+          onActiveMarkerChange={onActiveMarkerChange}
+        />
+      )}
       <ambientLight intensity={1} />
     </>
   );
@@ -235,6 +253,9 @@ export function SplatViewer({
   offset,
   rotationY,
   showSecond,
+  paused,
+  markers,
+  onActiveMarkerChange,
   onLoadingChange,
   onCameraMove,
   controlsRef,
@@ -247,6 +268,9 @@ export function SplatViewer({
         offset={offset}
         rotationY={rotationY}
         showSecond={showSecond}
+        paused={paused}
+        markers={markers}
+        onActiveMarkerChange={onActiveMarkerChange}
         onLoadingChange={onLoadingChange}
         onCameraMove={onCameraMove}
         controlsRef={controlsRef}

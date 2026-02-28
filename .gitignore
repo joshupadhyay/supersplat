@@ -44,4 +44,8 @@ pipeline/data/
 data/splats/
 *.spz
 
+# Street View source images
+data/streetview-intersection/*.jpg
+
 .vercel
+.wrangler

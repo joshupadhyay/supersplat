@@ -3,7 +3,11 @@ import { SplatViewer } from "./components/SplatViewer";
 import { ControlsPanel } from "./components/ControlsPanel";
 import { DebugPanel } from "./components/DebugPanel";
 import { TransitionOverlay } from "./components/TransitionOverlay";
+import { LoadingScreen } from "./components/LoadingScreen";
+import { InfoPopup } from "./components/InfoPopup";
+import { MarkerPopup } from "./components/MarkerPopup";
 import { MiniMap } from "./components/MiniMap";
+import { MARKERS, type Marker } from "./data/markers";
 import { useSplatUrl } from "./hooks/useSplatUrl";
 import { useStreetNav } from "./hooks/useStreetNav";
 import type CameraControlsImpl from "camera-controls";
@@ -13,10 +17,13 @@ export function App() {
   const splatParam = useSplatUrl();
   const nav = useStreetNav();
   const [loading, setLoading] = useState(true);
+  const [showInfoPopup, setShowInfoPopup] = useState(false);
+  const [activeMarker, setActiveMarker] = useState<Marker | null>(null);
   const [overlayActive, setOverlayActive] = useState(false);
   const [displayUrl, setDisplayUrl] = useState("");
   const controlsRef = useRef<CameraControlsImpl>(null);
   const transitioningRef = useRef(false);
+  const infoShownRef = useRef(false);
 
   // Debug panel state (always visible)
   const [debugOffset, setDebugOffset] = useState({ x: 0, y: 0, z: 4 });
@@ -91,9 +98,18 @@ export function App() {
         setOverlayActive(false);
         transitioningRef.current = false;
       }
+      // Show info popup after first successful load
+      if (!isLoading && !infoShownRef.current) {
+        infoShownRef.current = true;
+        setTimeout(() => setShowInfoPopup(true), 800);
+      }
     },
     [],
   );
+
+  const handleDismissInfo = useCallback(() => {
+    setShowInfoPopup(false);
+  }, []);
 
   const handleReset = useCallback(() => {
     controlsRef.current?.reset(true);
@@ -108,6 +124,9 @@ export function App() {
           offset={debugOffset}
           rotationY={debugRotationY}
           showSecond={!!nav.secondUrl && debugShowSecond}
+          paused={showInfoPopup || activeMarker !== null}
+          markers={MARKERS}
+          onActiveMarkerChange={setActiveMarker}
           onLoadingChange={handleLoadingChange}
           onCameraMove={handleCameraMove}
           controlsRef={controlsRef}
@@ -135,8 +154,10 @@ export function App() {
           onShowSecondChange={setDebugShowSecond}
         />
       )}
+      <LoadingScreen visible={loading} />
+      <InfoPopup visible={showInfoPopup} onDismiss={handleDismissInfo} />
+      <MarkerPopup marker={activeMarker} onDismiss={() => setActiveMarker(null)} />
       <ControlsPanel
-        loading={loading}
         onReset={handleReset}
         note={nav.note}
         nav={
