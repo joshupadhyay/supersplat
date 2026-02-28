@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import plugin from "bun-plugin-tailwind";
 import { existsSync } from "fs";
-import { rm } from "fs/promises";
+import { copyFile, rm } from "fs/promises";
 import path from "path";
 
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
@@ -146,5 +146,12 @@ const outputTable = result.outputs.map(output => ({
 
 console.table(outputTable);
 const buildTime = (end - start).toFixed(2);
+
+// Copy registry.json to dist for static hosting
+const registryPath = path.join(process.cwd(), "data", "registry.json");
+if (existsSync(registryPath)) {
+  await copyFile(registryPath, path.join(outdir, "registry.json"));
+  console.log("📋 Copied registry.json to dist");
+}
 
 console.log(`\n✅ Build completed in ${buildTime}ms\n`);

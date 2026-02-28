@@ -1,0 +1,77 @@
+{
+  "origin": {
+    "lat": 40.728523492401955,
+    "lng": -73.98748475165084
+  },
+  "worlds": [
+    {
+      "id": "st-marks-40.7285_-73.9875",
+      "file": "st-marks-40.7285_-73.9875.spz",
+      "mesh_file": "st-marks-40.7285_-73.9875_collider.glb",
+      "file_size_mb": 30.6,
+      "source_pano_id": "7m6cOuZYXUqYeRz5aXXylA",
+      "center": {
+        "lat": 40.728523492401955,
+        "lng": -73.98748475165084
+      },
+      "heading": 118.16324,
+      "model": "Marble 0.1-plus",
+      "world_id": "unknown",
+      "marble_url": "https://marble.worldlabs.ai/world/2f4ef0c0-4f18-4724-9fff-fa44432d65e5",
+      "estimated_radius_m": null,
+      "generated_at": "2026-02-27T20:42:32Z",
+      "status": "completed",
+      "mode": "multi-image",
+      "num_positions": 1,
+      "num_crops": 8,
+      "crop_interval_deg": 45,
+      "fov_deg": 90
+    },
+    {
+      "id": "st-marks-40.7284_-73.9872",
+      "file": "st-marks-40.7284_-73.9872.spz",
+      "mesh_file": "st-marks-40.7284_-73.9872_collider.glb",
+      "file_size_mb": 30.3,
+      "source_pano_id": "NazOX3vvO6BGGFpyUCet-g",
+      "center": {
+        "lat": 40.7284244272926,
+        "lng": -73.98724738955389
+      },
+      "heading": 118.98159,
+      "model": "Marble 0.1-plus",
+      "world_id": "unknown",
+      "marble_url": "https://marble.worldlabs.ai/world/e45cd21c-b488-40df-bc42-04e23b8166b4",
+      "estimated_radius_m": null,
+      "generated_at": "2026-02-27T20:45:19Z",
+      "status": "completed",
+      "mode": "multi-image",
+      "num_positions": 1,
+      "num_crops": 8,
+      "crop_interval_deg": 45,
+      "fov_deg": 90
+    },
+    {
+      "id": "st-marks-40.7283_-73.9870",
+      "file": "st-marks-40.7283_-73.9870.spz",
+      "mesh_file": "st-marks-40.7283_-73.9870_collider.glb",
+      "file_size_mb": 29.9,
+      "source_pano_id": "bNXGRm3HmDoFZX7q3ilf_g",
+      "center": {
+        "lat": 40.728336077001984,
+        "lng": -73.98703558376286
+      },
+      "heading": 118.78026,
+      "model": "Marble 0.1-plus",
+      "world_id": "unknown",
+      "marble_url": "https://marble.worldlabs.ai/world/664759a5-c7a1-4caa-9b4c-416ac2e9add1",
+      "estimated_radius_m": null,
+      "generated_at": "2026-02-27T20:46:03Z",
+      "status": "completed",
+      "mode": "multi-image",
+      "num_positions": 1,
+      "num_crops": 8,
+      "crop_interval_deg": 45,
+      "fov_deg": 90
+    }
+  ]
+}

@@ -47,10 +47,11 @@ export function useStreetNav(): StreetNav {
     setCurrentIndex((i) => Math.max(i - 1, 0));
   }, []);
 
+  const R2_BASE = process.env.BUN_PUBLIC_R2_URL ?? "";
   const currentWorld = worlds[currentIndex];
-  const currentUrl = currentWorld ? `/splats/${currentWorld.file}` : "";
+  const currentUrl = currentWorld ? `${R2_BASE}/${currentWorld.file}` : "";
   const secondUrl = currentWorld?.secondFile
-    ? `/splats/${currentWorld.secondFile}`
+    ? `${R2_BASE}/${currentWorld.secondFile}`
     : undefined;
 
   return {
