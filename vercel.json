@@ -2,6 +2,12 @@
   "buildCommand": "bun run build",
   "outputDirectory": "dist",
   "framework": null,
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "cloudflare-buckets": false
+    }
+  },
   "rewrites": [
     { "source": "/api/registry", "destination": "/registry.json" },
     { "source": "/(.*)", "destination": "/index.html" }
