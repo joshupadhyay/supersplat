@@ -10,6 +10,7 @@ import type {
 import { ProximityMarkers } from "./ProximityMarkers";
 import type { Marker } from "../data/markers";
 import type { SplatSlot } from "../hooks/useSplatStitching";
+import type { SplatOverride } from "./DebugHud";
 
 // Register Spark classes with R3F
 import "./spark/SparkRenderer";
@@ -29,6 +30,7 @@ declare module "@react-three/fiber" {
 
 interface SplatViewerProps {
   slots: SplatSlot[];
+  overrides?: Record<string, SplatOverride>;
   paused?: boolean;
   markers?: Marker[];
   onActiveMarkerChange?: (marker: Marker | null) => void;
@@ -130,6 +132,7 @@ function SplatNode({
 
 function Scene({
   slots,
+  overrides,
   paused,
   markers,
   onActiveMarkerChange,
@@ -188,20 +191,22 @@ function Scene({
       <CameraControls ref={activeControlsRef} makeDefault enabled={!paused} />
       <KeyboardMovement controlsRef={activeControlsRef} paused={paused} />
       <sparkRenderer args={sparkArgs}>
-        {slots.map(
-          (slot) =>
-            slot.shouldLoad && (
-              <group
-                key={slot.id}
-                position={[slot.offset.x, slot.offset.y, slot.offset.z]}
-              >
-                <SplatNode
-                  url={slot.url}
-                  onLoad={() => handleSplatLoad(slot.id)}
-                />
-              </group>
-            ),
-        )}
+        {slots.map((slot) => {
+          if (!slot.shouldLoad) return null;
+          const ov = overrides?.[slot.id];
+          const px = slot.offset.x + (ov?.dx ?? 0);
+          const py = slot.offset.y + (ov?.dy ?? 0);
+          const pz = slot.offset.z + (ov?.dz ?? 0);
+          const ry = ov?.ry ?? 0;
+          return (
+            <group key={slot.id} position={[px, py, pz]} rotation={[0, ry, 0]}>
+              <SplatNode
+                url={slot.url}
+                onLoad={() => handleSplatLoad(slot.id)}
+              />
+            </group>
+          );
+        })}
       </sparkRenderer>
       {markers && markers.length > 0 && onActiveMarkerChange && (
         <ProximityMarkers
@@ -218,6 +223,7 @@ function Scene({
 
 export function SplatViewer({
   slots,
+  overrides,
   paused,
   markers,
   onActiveMarkerChange,
@@ -229,6 +235,7 @@ export function SplatViewer({
     <Canvas gl={{ antialias: false }} camera={{ position: [0, 0, 1], fov: 60 }}>
       <Scene
         slots={slots}
+        overrides={overrides}
         paused={paused}
         markers={markers}
         onActiveMarkerChange={onActiveMarkerChange}

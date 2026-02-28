@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { SplatViewer } from "./components/SplatViewer";
 import { ControlsPanel } from "./components/ControlsPanel";
+import { DebugHud, type SplatOverride } from "./components/DebugHud";
 import { LoadingScreen } from "./components/LoadingScreen";
 import { InfoPopup } from "./components/InfoPopup";
 import { MarkerPopup } from "./components/MarkerPopup";
@@ -20,18 +21,26 @@ export function App() {
   const controlsRef = useRef<CameraControlsImpl>(null);
   const infoShownRef = useRef(false);
 
-  // Camera position for mini-map
+  // Camera position for mini-map and debug HUD
   const [cameraPos, setCameraPos] = useState({ x: 0, z: 0 });
+  const [cameraPos3d, setCameraPos3d] = useState({ x: 0, y: 0, z: 0 });
+
+  // Per-splat offset/rotation overrides for calibration
+  const [overrides, setOverrides] = useState<Record<string, SplatOverride>>({});
+  const handleOverrideChange = useCallback((id: string, ov: SplatOverride) => {
+    setOverrides((prev) => ({ ...prev, [id]: ov }));
+  }, []);
 
   // Single-splat mode if ?splat= is set
   const hasSplatParam =
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).has("splat");
 
-  // Camera position updates feed both mini-map and stitching proximity checks
+  // Camera position updates feed mini-map, debug HUD, and stitching proximity checks
   const handleCameraMove = useCallback(
     (pos: { x: number; y: number; z: number }) => {
       stitch.updateCamera(pos.x, pos.z);
+      setCameraPos3d(pos);
       setCameraPos((prev) => {
         if (Math.abs(prev.x - pos.x) > 0.01 || Math.abs(prev.z - pos.z) > 0.01) {
           return { x: pos.x, z: pos.z };
@@ -72,6 +81,7 @@ export function App() {
       {slots.length > 0 && (
         <SplatViewer
           slots={slots}
+          overrides={overrides}
           paused={showInfoPopup || activeMarker !== null}
           markers={MARKERS}
           onActiveMarkerChange={setActiveMarker}
@@ -91,6 +101,13 @@ export function App() {
           currentIndex={stitch.activeIndex}
         />
       )}
+      <DebugHud
+        cameraPos={cameraPos3d}
+        slots={stitch.slots}
+        activeIndex={stitch.activeIndex}
+        overrides={overrides}
+        onOverrideChange={handleOverrideChange}
+      />
       <LoadingScreen visible={loading} />
       <InfoPopup visible={showInfoPopup} onDismiss={handleDismissInfo} />
       <MarkerPopup marker={activeMarker} onDismiss={() => setActiveMarker(null)} />

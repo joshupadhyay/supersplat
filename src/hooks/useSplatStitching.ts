@@ -34,7 +34,7 @@ export interface SplatStitching {
 }
 
 /** Distance (in local units) at which to start loading a neighbor splat */
-const LOAD_RADIUS = 12;
+const LOAD_RADIUS = 999; // Force-load all splats for calibration
 
 export function useSplatStitching(): SplatStitching {
   const [worlds, setWorlds] = useState<World[]>([]);
