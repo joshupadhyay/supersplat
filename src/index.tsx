@@ -18,7 +18,7 @@ const server = serve({
     },
 
     "/api/registry": async () => {
-      const file = Bun.file("./data/splats/marble/registry.json");
+      const file = Bun.file("./data/registry.json");
       if (!(await file.exists())) return Response.json({ worlds: [] });
       return new Response(file, {
         headers: { "Content-Type": "application/json" },
