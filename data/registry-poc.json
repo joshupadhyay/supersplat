@@ -1,7 +1,7 @@
 {
   "origin": {
-    "lat": 40.728118959310166,
-    "lng": -73.98652167128083
+    "lat": 0,
+    "lng": 0
   },
   "worlds": [
     {
@@ -9,7 +9,7 @@
       "file": "poc/scene.spz",
       "file_size_mb": 2.7,
       "source_pano_id": null,
-      "center": null,
+      "center": { "lat": 0, "lng": 0 },
       "heading": 0,
       "model": "AnySplat",
       "world_id": "unknown",
@@ -23,7 +23,7 @@
       "file": "poc/scene-sequence.spz",
       "file_size_mb": 24,
       "source_pano_id": null,
-      "center": null,
+      "center": { "lat": 0.0001, "lng": 0 },
       "heading": 0,
       "model": "AnySplat",
       "world_id": "unknown",
@@ -38,7 +38,7 @@
       "file": "poc/scene-multi-3pano.spz",
       "file_size_mb": 13,
       "source_pano_id": null,
-      "center": null,
+      "center": { "lat": 0.0002, "lng": 0 },
       "heading": 0,
       "model": "AnySplat",
       "world_id": "unknown",
