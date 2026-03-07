@@ -1,0 +1,52 @@
+{
+  "origin": {
+    "lat": 40.728118959310166,
+    "lng": -73.98652167128083
+  },
+  "worlds": [
+    {
+      "id": "anysplat-scene",
+      "file": "poc/scene.spz",
+      "file_size_mb": 2.7,
+      "source_pano_id": null,
+      "center": null,
+      "heading": 0,
+      "model": "AnySplat",
+      "world_id": "unknown",
+      "marble_url": null,
+      "estimated_radius_m": null,
+      "generated_at": "2026-02-25T00:00:00Z",
+      "status": "completed"
+    },
+    {
+      "id": "anysplat-sequence",
+      "file": "poc/scene-sequence.spz",
+      "file_size_mb": 24,
+      "source_pano_id": null,
+      "center": null,
+      "heading": 0,
+      "model": "AnySplat",
+      "world_id": "unknown",
+      "marble_url": null,
+      "estimated_radius_m": null,
+      "generated_at": "2026-02-25T00:00:00Z",
+      "status": "completed",
+      "note": "Sequence mode - multiple frames combined"
+    },
+    {
+      "id": "anysplat-multi-3pano",
+      "file": "poc/scene-multi-3pano.spz",
+      "file_size_mb": 13,
+      "source_pano_id": null,
+      "center": null,
+      "heading": 0,
+      "model": "AnySplat",
+      "world_id": "unknown",
+      "marble_url": null,
+      "estimated_radius_m": null,
+      "generated_at": "2026-02-25T00:00:00Z",
+      "status": "completed",
+      "note": "Multi-pano - 3 panoramas combined"
+    }
+  ]
+}
